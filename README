@@ -9,7 +9,7 @@ require 'spec'
 require 'lib/match_each'
 
 describe 'array of ones' do
-  it 'should fail on 2' do
+  it 'should be all ones' do
     [1,2,3].should each { |n| 
       n.should == 1
     }
