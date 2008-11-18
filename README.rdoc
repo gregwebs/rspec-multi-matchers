@@ -8,32 +8,32 @@
 * match_enum
 * match_in_order
 
-  require 'rubygems'
-  require 'spec'
-  require 'rspec_multi_matchers'
-
-  describe 'array of ones' do
-    it 'should be all ones' do
-      [1,2,3].should each { |n| 
-        n.should == 1
-      }
+    require 'rubygems'
+    require 'spec'
+    require 'rspec_multi_matchers'
+    
+    describe 'array of ones' do
+      it 'should be all ones' do
+        [1,2,3].should each { |n| 
+          n.should == 1
+        }
+      end
     end
-  end
-
-  =begin output
-  'array of ones should fail on 2' FAILED
-      line: 14
-    item 1: 2
-  expected: 1,
-       got: 2 (using ==)
-  =end
+    
+    =begin output
+    'array of ones should fail on 2' FAILED
+        line: 14
+      item 1: 2
+    expected: 1,
+         got: 2 (using ==)
+    =end
 
 As expected, the output shows expected and got fields
 line is the line number of the expectiation inside the block
 the item line gives the index of the item being yielded to the block, and the item itself
 
 
-### Warning
+=== Warning
 
 Note the use of brackets  '{ ... }' instead of 'do ... end'
 this is necessary because 'do .. end' does not bind strong enough
