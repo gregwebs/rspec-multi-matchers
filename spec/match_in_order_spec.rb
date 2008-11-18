@@ -1,3 +1,5 @@
+require File.dirname(__FILE__) + '/spec_helper'
+
 describe MatchInOrder do
 
   it "should match a single regular expression" do

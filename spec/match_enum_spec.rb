@@ -1,4 +1,4 @@
-require 'spec/shared_enum_spec'
+require File.dirname(__FILE__) + '/spec_helper'
 
 describe MatchEnum do
   it_should_behave_like "each matcher"
