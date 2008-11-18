@@ -9,7 +9,6 @@ lib/rspec_multi_matchers.rb
 script/console
 script/destroy
 script/generate
-spec/loader.rb
 spec/match_each_spec.rb
 spec/match_enum_spec.rb
 spec/match_in_order_spec.rb
