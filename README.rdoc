@@ -10,7 +10,7 @@
 
     require 'rubygems'
     require 'spec'
-    require 'rspec_multi_matchers'
+    require 'gregwebs-rspec_multi_matchers'
     
     describe 'array of ones' do
       it 'should be all ones' do
