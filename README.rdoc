@@ -44,7 +44,7 @@ this is necessary because 'do .. end' does not bind strong enough
 
 == INSTALL:
 
-* sudo gem install gregwebs-rspec-multi-matchers --source http://gems.github.com
+* gem install rspec_multi_matchers
 
 == LICENSE:
 
