@@ -7,7 +7,8 @@ shared_examples_for "each matcher" do
   end
 
   it 'should not raise an error for met expectations' do
-    [1,2,3].should send(*@iterator) {|n| n.should == n}
+    i = 0
+    [1,2,3].should send(*@iterator) {|n| n.should == (i+=1)}
   end
 
   it 'should raise an error if there are no items in the enumerable object' do

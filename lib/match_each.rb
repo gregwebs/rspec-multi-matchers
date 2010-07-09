@@ -7,9 +7,8 @@ class MatchEach
 
   def initialize(options, &block)
     @empty_okay = (options and options[:empty])
-    @block = block
-    if !@block
-      raise NoBlockGivenError, 'no block given, you probably need to use brackets instead of "do...end"'
+    unless @block = block
+      raise NoBlockGivenError, 'No block given. You probably need to use brackets "{...}" instead of "do...end"'
     end
   end
 
