@@ -1,5 +1,10 @@
 = rspec-multi-matchers
 
+== Summary
+* test collection using each or other enumerable methods
+* tests fell more natural and have a friendlier failure message
+
+== HomePage
 * http://github.com/gregwebs/rspec-multi-matchers
 
 == DESCRIPTION:

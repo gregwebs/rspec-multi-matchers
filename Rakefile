@@ -5,6 +5,7 @@ require File.dirname(__FILE__) + '/lib/rspec_multi_matchers'
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
 $hoe = Hoe.new('rspec_multi_matchers', RspecMultiMatchers::VERSION) do |p|
   p.developer('Greg Weber', '')
+  p.summary = "better collection testing"
   p.changes              = p.paragraphs_of("History.txt", 0..1).join("\n\n")
   # p.extra_deps         = [
   #   ['activesupport','>= 2.0.2'],
