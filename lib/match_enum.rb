@@ -5,24 +5,33 @@ class MatchEnum
   class BlankEnumerableError < MatchEnumError; end
   class NoBlockGivenError < MatchEnumError; end
 
-  def initialize(method, options, &block)
+  def initialize(method, *enum_args, &block)
+    options = enum_args.pop if Hash === enum_args.last
     @method = method
+    @enum_args = enum_args
     @empty_okay = (options and options[:empty])
     @block = block
     if !@block
       raise NoBlockGivenError, 'no block given, you probably need to use brackets instead of "do...end"'
     end
 
-    @num_args = @block.arity
-    @num_args = 0 if @num_args == -1 # correct ruby error
-    return if @@enum_methods[@num_args]
-    @@enum_methods[@num_args] = true
+    @num_block_args = @block.arity
+    @num_block_args = 0 if @num_block_args == -1 # correct ruby error
+    if enum_args.empty?
+      return if @@enum_methods[@num_block_args]
+      @@enum_methods[@num_block_args] = true
+    end
 
-    args = (1..(@num_args)).map {|i| 'arg_' << i.to_s}.join(',')
+    args = (1..(@num_block_args)).map {|i| 'arg_' << i.to_s}.join(',')
+    invoke_enum = if @enum_args.empty?
+      "target.send(@method) do |#{args}|"
+                  else
+      "target.send(@method, *@enum_args) do |#{args}|"
+                  end
     eval <<-EOS
-    def enum_#{@num_args}(target)
+    def enum_#{@num_block_args}(target)
       @counter = 0
-      target.send(@method) do |#{args}|
+      #{invoke_enum}
         begin
           @block.call(#{args})
         rescue Spec::Expectations::ExpectationNotMetError => e
@@ -38,7 +47,7 @@ class MatchEnum
   end
 
   def enum(target)
-    eval("enum_#{@num_args}(target)")
+    eval("enum_#{@num_block_args}(target)")
   end
 
   def matches?(target)
@@ -61,6 +70,6 @@ class MatchEnum
   # no need for should_not, so no negative_failure_messages
 end
 
-def enum(method, options=nil, &block)
-  MatchEnum.new method, options, &block
+def enum(method, *args, &block)
+  MatchEnum.new method, *args, &block
 end

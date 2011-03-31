@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require File.dirname(__FILE__) + '/../spec_helper'
 
 describe MatchEach do
   it_should_behave_like "each matcher"
@@ -11,12 +11,12 @@ describe MatchEach do
   it 'should add to the inner error message' do
     begin
       2.should == 1
-    rescue Spec::Expectations::ExpectationNotMetError => e
+    rescue Rspec::Expectations::ExpectationNotMetError => e
       @line = __LINE__ + 2
       lambda{ [1,2,3].should each { |n|
         n.should == 1
       } }.should raise_error(
-        Spec::Expectations::ExpectationNotMetError, /^\s*line: #{@line}\s*item 1: 2\s*#{Regexp.escape(e.message)}/m)
+        Rspec::Expectations::ExpectationNotMetError, /^\s*line: #{@line}\s*item 1: 2\s*#{Regexp.escape(e.message)}/m)
     else fail
     end
   end
