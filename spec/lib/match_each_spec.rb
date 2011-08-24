@@ -11,12 +11,12 @@ describe MatchEach do
   it 'should add to the inner error message' do
     begin
       2.should == 1
-    rescue Rspec::Expectations::ExpectationNotMetError => e
+    rescue RSpec::Expectations::ExpectationNotMetError => e
       @line = __LINE__ + 2
       lambda{ [1,2,3].should each { |n|
         n.should == 1
       } }.should raise_error(
-        Rspec::Expectations::ExpectationNotMetError, /^\s*line: #{@line}\s*item 1: 2\s*#{Regexp.escape(e.message)}/m)
+        RSpec::Expectations::ExpectationNotMetError, /^\s*line: #{@line}\s*item 1: 2\s*#{Regexp.escape(e.message)}/m)
     else fail
     end
   end
