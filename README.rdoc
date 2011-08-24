@@ -2,16 +2,12 @@
 
 == Summary
 * test collection using each or other enumerable methods
-* tests fell more natural and have a friendlier failure message
+* makes testing more natural and have a friendlier failure message
 
 == HomePage
 * http://github.com/gregwebs/rspec-multi-matchers
 
 == DESCRIPTION:
-
-* match_each
-* match_enum
-* match_in_order
 
     require 'rubygems'
     require 'spec'
@@ -22,6 +18,11 @@
         [1,2,3].should each { |n| 
           n.should == 1
         }
+      end
+
+      # this is a new shortcut for a smaller use case
+      it 'should be all ones' do
+        [1,1,1].should each be_eql(1)
       end
     end
     
@@ -41,7 +42,7 @@ the item line gives the index of the item being yielded to the block, and the it
 === Warning
 
 Note the use of brackets  '{ ... }' instead of 'do ... end'
-this is necessary because 'do .. end' does not bind strong enough
+this is necessary because 'do .. end' does not bind strongly enough
 
 == RELATED ARTICLES:
 

@@ -1,3 +1,20 @@
+RSpec::Matchers.define :each do |meta_or_options, &block|
+  if block
+    MatchEach.new meta_or_options, &block
+  else
+    match do |actual|
+      actual.each_with_index do |i, j|
+        @elem = j
+        i.should meta_or_options
+      end
+    end
+
+    failure_message_for_should do |actual|
+      "at[#{@elem}] #{meta_or_options.failure_message_for_should}"
+    end
+  end
+end
+
 class MatchEach
 
   class MatchEachError < Exception; end
@@ -71,8 +88,4 @@ class MatchEach
   end
 
   # no need for should_not, so no negative_failure_messages
-end
-
-def each(options=nil, &block)
-  MatchEach.new options, &block
 end
