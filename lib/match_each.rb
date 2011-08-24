@@ -1,17 +1,21 @@
-RSpec::Matchers.define :each do |meta_or_options, &block|
-  if block
+def each meta_or_options = nil, &block
+  if block or !meta_or_options
     MatchEach.new meta_or_options, &block
   else
-    match do |actual|
-      actual.each_with_index do |i, j|
-        @elem = j
-        i.should meta_or_options
-      end
-    end
+    each_matcher meta_or_options
+  end
+end
 
-    failure_message_for_should do |actual|
-      "at[#{@elem}] #{meta_or_options.failure_message_for_should}"
+RSpec::Matchers.define :each_matcher do |meta|
+  match do |actual|
+    actual.each_with_index do |i, j|
+      @elem = j
+      i.should meta_or_options
     end
+  end
+
+  failure_message_for_should do |actual|
+    "at[#{@elem}] #{meta_or_options.failure_message_for_should}"
   end
 end
 
@@ -67,13 +71,14 @@ class MatchEach
   def failure_line
     # find 'matches?' in statck trace
     # then move back to the first line number that is not a function call
-    error_line = nil
+    error_lines = []
     @error.backtrace.each do |line|
-      if line.match(/:\d+:in\s*[`'"](.*)[`'"]\s*$/)
-        return error_line if $1 == 'matches?'
-      else
-        error_line = line.match(/^[^:]+:(\d+)/)[1]
+      if line[/:\d+:in\s*[`'"](.*)[`'"]\s*$/, 1] == 'matches?'
+        error_lines.reverse_each do |line|
+          return line[/^[^:]+:(\d+)/, 1] if line !~ %r!rspec-multi-matchers/lib/match_each\.rb!
+        end
       end
+      error_lines.push line
     end
 
     nil # should not reach here

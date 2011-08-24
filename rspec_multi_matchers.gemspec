@@ -1,4 +1,5 @@
 require File.expand_path('../lib/rspec_multi_matchers', __FILE__)
+
 Gem::Specification.new do |s|
   s.name = 'rspec_multi_matchers'
   s.version = RspecMultiMatchers::VERSION

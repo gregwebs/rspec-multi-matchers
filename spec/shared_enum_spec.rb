@@ -12,7 +12,7 @@ shared_examples_for "each matcher" do
   end
 
   it 'should raise an error if there are no items in the enumerable object' do
-    lambda{ [].should send(*@iterator){} }.should raise_error(@class::BlankEnumerableError)
+    lambda{ [].should send(*@iterator){} }.should raise_error(@class::BlankEnumerableError, /.*/)
     [false, nil].each do |f|
       @iterator.push(:empty => f)
       lambda{ [].should send(*@iterator){}}.should raise_error(@class::BlankEnumerableError)
