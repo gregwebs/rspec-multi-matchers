@@ -46,7 +46,7 @@ class MatchEach
     target.each do |obj|
       begin
         @block.call(obj)
-      rescue Spec::Expectations::ExpectationNotMetError => e
+      rescue RSpec::Expectations::ExpectationNotMetError => e
         @error = e
         @failure_object = obj
         return false
